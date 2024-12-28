@@ -1,36 +1,38 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FurnitureSpawner : MonoBehaviour
 {
-    public GameObject[] furniturePrefabs; // Assign furniture prefabs in the Inspector
-    public Transform rightController; // Reference to the right controller
-    public LayerMask groundLayer; // Set a layer for the ground
+    public GameObject[] furniturePrefabs; // Assign prefabs in Inspector
+    public Transform mainCamera;         // Assign the main camera (user's head in VR)
 
-    private GameObject selectedFurniture;
-
-    // Select the furniture to spawn (triggered by catalog buttons)
-    public void SelectFurniture(int index)
+    public void SpawnFurniture(int prefabIndex)
     {
-        selectedFurniture = furniturePrefabs[index];
+        if (prefabIndex >= furniturePrefabs.Length || prefabIndex < 0)
+        {
+            Debug.LogWarning("Invalid prefab index.");
+            return;
+        }
+
+        // Perform a raycast from the user's gaze direction
+        RaycastHit hit;
+        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hit, 10f)) // Adjust raycast distance
+        {
+            Instantiate(furniturePrefabs[prefabIndex], hit.point, Quaternion.identity);
+            Debug.Log($"Spawned {furniturePrefabs[prefabIndex].name} at {hit.point}");
+        }
+        else
+        {
+            Debug.LogWarning("Raycast did not hit anything.");
+        }
     }
 
-    // Spawn the selected furniture
-    public void SpawnFurniture()
+    void OnDrawGizmos()
     {
-        if (selectedFurniture != null)
+        if (mainCamera != null)
         {
-            // Raycast to find ground
-            Ray ray = new Ray(rightController.position, rightController.forward);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayer))
-            {
-                // Spawn the furniture at the hit point
-                Vector3 spawnPosition = hit.point;
-
-                // Adjust the Y position to ensure the furniture is on the ground
-                spawnPosition.y += selectedFurniture.GetComponent<Collider>().bounds.extents.y;
-
-                Instantiate(selectedFurniture, spawnPosition, Quaternion.identity);
-            }
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(mainCamera.position, mainCamera.forward * 10);
         }
     }
 }

@@ -1577,24 +1577,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "TrackpadPress",
-                    "type": "Button",
-                    "id": "1b999b0a-1653-44f4-b2b9-0d1008b86078",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "TrackpadPosition",
-                    "type": "Value",
-                    "id": "048b9c77-2ad0-470e-8a98-dd6e780b5d24",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1760,28 +1742,6 @@
                     "processors": "ScaleVector2(x=0),StickDeadzone",
                     "groups": "Generic XR Controller",
                     "action": "Scale Delta",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "173e40c2-8973-4073-8d56-384bb9091579",
-                    "path": "<XRController>{RightHand}/{TriggerButton}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TrackpadPress",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b7b4c2ca-8661-4ce2-857e-575059924627",
-                    "path": "<ViveController>{RightHand}/trackpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TrackpadPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
